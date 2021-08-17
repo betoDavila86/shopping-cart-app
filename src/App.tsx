@@ -49,7 +49,18 @@ function App() {
       return [...prevState, { ...currentItem, amount: 1 }];
     })
   };
-  const handleRemoveFromCart = (id: number) => null;
+  const handleRemoveFromCart = (id: number) => {
+    setCartItems(prevState => {
+      return prevState.reduce((acc, item) => {
+        if (item.id === id) {
+          if (item.amount === 1) return acc;
+          return [...acc, {...item, amount: item.amount - 1}];
+        } else {
+          return [...acc, item];
+        }
+      }, [] as CartItemType[]);
+    })
+  };
 
 
   const showData = () => {
